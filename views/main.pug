@@ -1,0 +1,33 @@
+extends layout
+
+block content
+    // All conditions
+    if book
+        include ./includes/_books
+
+    if overdueBook
+        include ./includes/_overdue_books
+
+    if checkedBook
+        include ./includes/_checked_books
+
+    if bookDetail
+        include ./includes/_book_details
+
+    if patron
+        include ./includes/_patrons
+
+    if patronDetail
+        include ./includes/_patron_details
+
+    if loan
+        include ./includes/_loans
+
+    if checkedLoan
+        include ./includes/_checked_loans
+
+    if overdueLoan
+        include ./includes/_overdue_loans
+
+
+
