@@ -2,7 +2,7 @@ extends layout
 
 block content
     // All conditions
-    if book
+    if books
         include ./includes/_books
 
     if overdueBook
@@ -14,13 +14,13 @@ block content
     if bookDetail
         include ./includes/_book_details
 
-    if patron
+    if patrons
         include ./includes/_patrons
 
     if patronDetail
         include ./includes/_patron_details
 
-    if loan
+    if loans
         include ./includes/_loans
 
     if checkedLoan

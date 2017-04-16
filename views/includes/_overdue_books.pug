@@ -8,21 +8,10 @@ table
             th Genre
             th Year Released
     tbody
-        tr
-            td
-                a(href='converted/book_detail.html') Harry Potter and the Goblet of Fire
-            td J.K. Rowling
-            td Fantasy
-            td 2000
-        tr
-            td
-                a(href='converted/book_detail.html') A Brief History of Time
-            td Stephen Hawking
-            td Non Fiction
-            td 1988
-        tr
-            td
-                a(href='converted/book_detail.html') The Universe in a Nutshell
-            td Stephen Hawking
-            td Non Fiction
-            td 2001
+        for book in overdueBook
+            tr
+                td
+                    a(href='/books/' + book.dataValues.id) #{book.dataValues.title}
+                td #{book.dataValues.author}
+                td #{book.dataValues.genre}
+                td #{book.dataValues.return_by}
