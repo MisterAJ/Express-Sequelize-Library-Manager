@@ -12,11 +12,11 @@ module.exports = function (sequelize, DataTypes) {
         first_published: DataTypes.STRING
     }, {
         classMethods: {
-            associate: function (models) {
-                // associations can be defined here
+            associate: function(models) {
+                Book.hasMany(models.Loan, {foreignKey: 'book_id'});
             }
         },
-        instanceMethods: {}
+        timestamps: false
     });
     return Book;
 };

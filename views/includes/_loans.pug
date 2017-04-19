@@ -1,4 +1,4 @@
-h1 Loans
+h1 #{title}
 include _loan_nav
 table
     thead
@@ -13,9 +13,9 @@ table
         for loan in loans
             tr
                 td
-                    a(href='/books/' + loan.dataValues.book_id) Book
+                    a(href='/books/' + loan.dataValues.book_id) #{loan.dataValues.Book.dataValues.title}
                 td
-                    a(href='/patrons/' + loan.dataValues.patron_id) Patron
+                    a(href='/patrons/' + loan.dataValues.patron_id) #{loan.dataValues.Patron.dataValues.first_name} #{loan.dataValues.Patron.dataValues.last_name}
                 td #{loan.dataValues.loaned_on}
                 td #{loan.dataValues.return_by}
                 td #{loan.dataValues.returned_on}

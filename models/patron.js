@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function (sequelize, DataTypes) {
-    var Patron = sequelize.define('Patron', {
+    const Patron = sequelize.define('Patron', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -15,11 +15,10 @@ module.exports = function (sequelize, DataTypes) {
     }, {
         classMethods: {
             associate: function (models) {
-                function getFullName() {
-                    return (models.first_name + ' ' + models.last_name)
-                }
+                Patron.hasMany(models.Loan, {foreignKey: 'patron_id'});
             }
-        }
+        },
+        timestamps: false
     });
     return Patron;
 };
