@@ -31,23 +31,14 @@ table
             th Returned on
             th Action
     tbody
-        tr
-            td
-                a(href='converted/book_detail.html') Harry Potter and the Goblet of Fire
-            td
-                a(href='patron_detail.html') Andrew Chalkley
-            td 2015-12-11
-            td 2015-12-18
-            td
-            td
-                a.button(href='return_book.html') Return Book
-        tr
-            td
-                a(href='converted/book_detail.html') A Brief History of Time
-            td
-                a(href='patron_detail.html') Andrew Chalkley
-            td 2015-12-12
-            td 2015-12-19
-            td
-            td
-                a.button(href='return_book.html') Return Book
+        for loan in patronDetailLoans
+            tr
+                td
+                    a(href='/books/' + loan.dataValues.book_id) #{loan.dataValues.Book.dataValues.title}
+                td
+                    a(href='patron_detail.html') #{loan.dataValues.Patron.dataValues.first_name} #{loan.dataValues.Patron.dataValues.last_name}
+                td #{loan.dataValues.loaned_on}
+                td #{loan.dataValues.return_by}
+                td #{loan.dataValues.returned_on}
+                td
+                    a.button(href='/patrons/return/' + loan.dataValues.id ) Return Book

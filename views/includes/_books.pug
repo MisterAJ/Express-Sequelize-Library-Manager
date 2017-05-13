@@ -8,10 +8,20 @@ table
             th Genre
             th Year Released
     tbody
-        for book in books
-            tr
-                td
-                    a(href='../../../books/' + book.dataValues.id) #{book.dataValues.title}
-                td #{book.dataValues.author}
-                td #{book.dataValues.genre}
-                td #{book.dataValues.first_published}
+        if books
+            for book in books
+                tr
+                    td
+                        a(href='../../../books/' + book.dataValues.id) #{book.dataValues.title}
+                    td #{book.dataValues.author}
+                    td #{book.dataValues.genre}
+                    td #{book.dataValues.first_published}
+
+        if overdueOrCheckedBook
+            for book in overdueOrCheckedBook
+                tr
+                    td
+                        a(href='../../../books/' + book.dataValues.Book.dataValues.id) #{book.dataValues.Book.dataValues.title}
+                    td #{book.dataValues.Book.dataValues.author}
+                    td #{book.dataValues.Book.dataValues.genre}
+                    td #{book.dataValues.Book.dataValues.first_published}

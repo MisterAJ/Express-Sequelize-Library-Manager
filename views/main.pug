@@ -5,11 +5,8 @@ block content
     if books
         include ./includes/_books
 
-    if overdueBook
-        include ./includes/_overdue_books
-
-    if checkedBook
-        include ./includes/_checked_books
+    if overdueOrCheckedBook
+        include ./includes/_books
 
     if bookDetail
         include ./includes/_book_details

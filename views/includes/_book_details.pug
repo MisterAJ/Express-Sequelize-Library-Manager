@@ -30,7 +30,7 @@ table
                 td
                     p #{bookDetail.title}
                 td
-                    a(href='/patrons/' + loan.dataValues.patron_id) #{patronDetails.dataValues.first_name} #{patronDetails.dataValues.last_name}
+                    a(href='/patrons/' + loan.dataValues.Patron.dataValues.id) #{patronDetails.dataValues.first_name} #{patronDetails.dataValues.last_name}
                 td #{loan.dataValues.loaned_on}
                 td #{loan.dataValues.returned_on}
                 td
