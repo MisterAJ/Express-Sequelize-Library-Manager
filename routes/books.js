@@ -10,7 +10,7 @@ const Patrons = require("../models").Patron;
 
 router.route('/new')
     .get(function (req, res, next) {
-        res.render("new", {book: Books.build(), title: "New Book"})
+        res.render("new", {book: true, title: "New Book"})
     })
     .post(function (req, res, next) {
 

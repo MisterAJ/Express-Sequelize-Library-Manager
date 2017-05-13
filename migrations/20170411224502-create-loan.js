@@ -21,6 +21,7 @@ module.exports = {
                 type: Sequelize.DATE
             },
             returned_on: {
+                allowNull: true,
                 type: Sequelize.DATE
             },
             createdAt: {

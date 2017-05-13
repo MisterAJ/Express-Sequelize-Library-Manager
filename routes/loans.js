@@ -7,27 +7,33 @@ const Patrons = require("../models").Patron;
 // Loans
 
 // TODO - POST for new loan entry
-router.get('/new', function (req, res, next) {
-    // Promises
-    let p1 = Books.findAll();
-    let p2 = Patrons.findAll();
-    const d = new Date();
-    const n = d.toISOString();
-    const returnDate = new Date();
-    returnDate.setDate(d.getDate() + 7);
-    Promise.all([p1, p2]).then(function (values) {
-        "use strict";
-        res.render("new", {
-            loan: true,
-
-            date: n,
-            returnDate: returnDate,
-            books: values[0],
-            patrons: values[1],
-            title: "New Book"
+router.route('/new')
+    .get(function (req, res, next) {
+        // Promises
+        let p1 = Books.findAll();
+        let p2 = Patrons.findAll();
+        const d = new Date();
+        const n = d.toISOString();
+        const returnDate = new Date();
+        returnDate.setDate(d.getDate() + 7);
+        Promise.all([p1, p2]).then(function (values) {
+            "use strict";
+            res.render("new", {
+                loan: true,
+                date: n,
+                returnDate: returnDate,
+                books: values[0],
+                patrons: values[1],
+                title: "New Book"
+            });
+        });
+    })
+    .post(function (req, res, next) {
+        Loans.create(req.body).then(function (loan) {
+            console.log(loan);
+            res.redirect('/loans/' + loan.dataValues.id);
         })
     });
-});
 
 router.get('/all', function (req, res, next) {
     Loans.findAll({
