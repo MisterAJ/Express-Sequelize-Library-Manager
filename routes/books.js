@@ -6,8 +6,6 @@ const Patrons = require("../models").Patron;
 
 // Books
 
-// TODO - Client side form validation
-
 router.route('/new')
     .get(function (req, res, next) {
         res.render("new", {book: true, title: "New Book"})
@@ -26,7 +24,6 @@ router.get('/all', function (req, res, next) {
     });
 });
 
-// TODO - Fix Query for Overdue
 router.get('/overdue', function (req, res, next) {
     const d = new Date();
     const n = d.toISOString();
@@ -46,7 +43,7 @@ router.get('/overdue', function (req, res, next) {
         res.render("main", {overdueOrCheckedBook: book, title: "Overdue Books"})
     })
 });
-// TODO - Fix Query for checked out
+
 router.get('/checked', function (req, res, next) {
     Loans.findAll({
         include: Books,
@@ -67,28 +64,30 @@ router.get('/checked', function (req, res, next) {
 
 
 router.get('/:id', function (req, res, next) {
+    let bookItem;
     Books.findByPrimary(req.params.id)
         .then(function (book) {
+            bookItem = book;
             Loans.findAll({
+                include: {model: Patrons},
                 where: {
                     book_id: book.dataValues.id
                 }
             })
                 .then(function (loans) {
-                    if (loans.length > 0) {
-                        Patrons.findByPrimary(loans[0].dataValues.patron_id)
-                            .then(function (patron) {
-                                res.render("main", {
-                                    bookDetail: book.dataValues,
-                                    patronDetails: patron,
-                                    loanDetails: loans,
-                                    title: "Book Details"
-                                })
-                            });
-                    } else {
+                    if(loans.length > 0) {
+                        console.log(loans);
                         res.render("main", {
                             bookDetail: book.dataValues,
+                            patronDetails: loans[0].dataValues.Patron.dataValues,
                             loanDetails: loans,
+                            title: "Book Details"
+                        })
+
+                    }
+                    else {
+                        res.render("main", {
+                            bookDetail: book.dataValues,
                             title: "Book Details"
                         })
                     }

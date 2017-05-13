@@ -6,7 +6,7 @@ const Patrons = require("../models").Patron;
 
 // Loans
 
-// TODO - POST for new loan entry
+// TODO - BUG - Fix Sequelize error - NULL id
 router.route('/new')
     .get(function (req, res, next) {
         // Promises
@@ -38,15 +38,14 @@ router.route('/new')
 router.get('/all', function (req, res, next) {
     Loans.findAll({
         include: [{model: Books}, {model: Patrons}],
-        order: [[{model: Books}, "title", "ASC"]]
+        order: [[{model: Books}, "title", "ASC"]],
+
     })
         .then(function (loans) {
             console.log(loans);
             res.render("main", {loans: loans, title: "All Loans"});
         });
 });
-
-// TODO - Add !returned to query
 
 router.get('/overdue', function (req, res, next) {
     const d = new Date();
@@ -84,6 +83,17 @@ router.get('/checked', function (req, res, next) {
     }).then(function (loans) {
         res.render("main", {loans: loans, title: "Checked Loans"})
     });
+});
+
+router.get('/return/:id', function (req, res, next) {
+    Loans.findByPrimary(req.params.id)
+        .then(function (loan) {
+            const d = new Date();
+            const n = d.toISOString();
+            loan.updateAttributes({returned_on: n });
+            res.redirect('/loans/all')
+
+        })
 });
 
 module.exports = router;

@@ -14,7 +14,6 @@ router.route('/new')
     })
     .post(function (req, res, next) {
         Patrons.create(req.body).then(function (patron) {
-            console.log(patron);
             res.redirect('/patrons/' + patron.dataValues.id)
         })
     });
@@ -25,24 +24,39 @@ router.get('/all', function (req, res, next) {
     });
 });
 
-// TODO - Update detail changes to patrons and books
-
-router.get('/:id', function (req, res, next) {
-    Loans.findAll({
-        include: [{model: Patrons},{model: Books}],
-        order: [[{model: Books}, "title", "ASC"]],
-        where: {id: req.params.id}
-    })
-        .then(function (loans) {
-            console.log(loans[0].dataValues);
-            res.render("main", {
-                patronDetail: loans[0].dataValues.Patron.dataValues,
-                patronDetailLoans: loans,
-                title: "Patron Details",
+router.route('/:id')
+    .get(function (req, res, next) {
+        Loans.findAll({
+            include: [{model: Patrons},{model: Books}],
+            order: [[{model: Books}, "title", "ASC"]],
+            where: {patron_id: req.params.id}
+        })
+            .then(function (loans) {
+                if(loans.length > 0){
+                    res.render("main", {
+                        patronDetail: loans[0].dataValues.Patron.dataValues,
+                        patronDetailLoans: loans,
+                        title: "Patron Details",
+                    });
+                } else {
+                    Patrons.findByPrimary(req.params.id)
+                        .then(function (patron) {
+                            res.render("main", {
+                                patronDetail: patron.dataValues,
+                                title: "Patron Details",
+                            });
+                        })
+                }
 
             });
-
-        });
-});
+    })
+    .post(function (req, res, next) {
+        Patrons.findByPrimary(req.params.id)
+            .then(function (patron) {
+                console.log(req.body);
+                patron.update(req.body);
+                res.redirect('/patrons/all')
+            })
+    });
 
 module.exports = router;
