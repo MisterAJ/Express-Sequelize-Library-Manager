@@ -31,7 +31,7 @@ router.route('/new')
     .post(function (req, res, next) {
         Loans.create(req.body).then(function (loan) {
             console.log(loan);
-            res.redirect('/loans/' + loan.dataValues.id);
+            res.redirect('/loans/all');
         })
     });
 

@@ -4,17 +4,17 @@ form(action='/loans/new' method='post')
         label(for='book_id') Book
         select#book_id(name='book_id')
             for book in books
-                option(value=book.dataValues.id) #{book.dataValues.title}
+                option(name='book_id' value=book.dataValues.id) #{book.dataValues.title}
     p
         label(for='patron_id') Patron
         select#patron_id(name='patron_id')
             for patron in patrons
-                option(value=patron.dataValues.id) #{patron.dataValues.first_name} #{patron.dataValues.last_name}
+                option(name='patron_id' value=patron.dataValues.id) #{patron.dataValues.first_name} #{patron.dataValues.last_name}
     p
         label(for='loaned_on') Loaned on:
-        input#loaned_on(type='text', value=date)
+        input#loaned_on(name='loaned_on' type='text', value=date)
     p
         label(for='return_by') Return by:
-        input#return_by(type='text', value=returnDate)
+        input#return_by(name='return_by' type='text', value=returnDate)
     p
         input(type='submit', value='Create New Loan')
