@@ -1,19 +1,19 @@
-h1 Patron: Return Book
+h1 Return Book
 p
     strong Book Title:
-    |  Harry Potter and the Goblet of Fire
+    |  #{returnBook.dataValues.title}
 p
     strong Loaned By:
-    |  Andrew Chalkley
+    |  #{returnPatron.dataValues.first_name} #{returnPatron.dataValues.last_name}
 p
     strong Loaned On:
-    |  2015-12-11
+    |  #{returns.dataValues.loaned_on}
 p
     strong Return By:
-    |  2015-12-18
-form
+    |  #{returns.dataValues.return_by}
+form(action='/returns/' + returns.dataValues.id method='post')
     p
         label(for='returned_on') Returned on:
-        input#returned_on(type='text', value='2020-10-10')
+        input#returned_on(name='returned_on' placeholder='YYYY-MM-DD' pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" type='date', value=date required='')
     p
         input(type='submit', value='Return Book')

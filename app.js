@@ -8,6 +8,7 @@ const books = require('./routes/books');
 const index = require('./routes/index');
 const patrons = require('./routes/patrons');
 const loans = require('./routes/loans');
+const returns = require('./routes/returns');
 
 var app = express();
 
@@ -29,10 +30,11 @@ app.use('/', index);
 app.use('/books/', books);
 app.use('/patrons/', patrons);
 app.use('/loans/', loans);
+app.use('/returns/', returns);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    var err = new Error('Not Found');
+    let err = new Error('Not Found');
     err.status = 404;
     next(err);
 });

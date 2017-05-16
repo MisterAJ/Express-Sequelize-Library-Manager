@@ -12,11 +12,13 @@ router.route('/new')
         res.render("new", {patron: true, title: "New Book"}
         );
     })
-    .post(function (req, res, next) {
+    .post([function (req, res, next) {
         Patrons.create(req.body).then(function (patron) {
-            res.redirect('/patrons/' + patron.dataValues.id)
+            next();
         })
-    });
+    }, function (req, res) {
+        res.redirect('/patrons/all')
+    }]);
 
 router.get('/all', function (req, res, next) {
     Patrons.findAll().then(function (patrons) {
@@ -50,13 +52,15 @@ router.route('/:id')
 
             });
     })
-    .post(function (req, res, next) {
+    .post([function (req, res, next) {
         Patrons.findByPrimary(req.params.id)
             .then(function (patron) {
                 console.log(req.body);
                 patron.update(req.body);
-                res.redirect('/patrons/all')
+                next();
             })
-    });
+    }, function (req, res) {
+        res.redirect('/patrons/all')
+    }]);
 
 module.exports = router;

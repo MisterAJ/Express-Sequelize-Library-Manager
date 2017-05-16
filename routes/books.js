@@ -10,13 +10,15 @@ router.route('/new')
     .get(function (req, res, next) {
         res.render("new", {book: true, title: "New Book"})
     })
-    .post(function (req, res, next) {
-
+    .post([function (req, res, next) {
         Books.create(req.body).then(function (book) {
             console.log(book);
-            res.redirect('/books/' + book.dataValues.id)
+            next();
         })
-    });
+    }, function (req, res) {
+        res.redirect('/books/all')
+    }]);
+
 
 router.get('/all', function (req, res, next) {
     Books.findAll().then(function (books) {
@@ -63,37 +65,47 @@ router.get('/checked', function (req, res, next) {
 });
 
 
-router.get('/:id', function (req, res, next) {
-    let bookItem;
-    Books.findByPrimary(req.params.id)
-        .then(function (book) {
-            bookItem = book;
-            Loans.findAll({
-                include: {model: Patrons},
-                where: {
-                    book_id: book.dataValues.id
-                }
-            })
-                .then(function (loans) {
-                    if(loans.length > 0) {
-                        console.log(loans);
-                        res.render("main", {
-                            bookDetail: book.dataValues,
-                            patronDetails: loans[0].dataValues.Patron.dataValues,
-                            loanDetails: loans,
-                            title: "Book Details"
-                        })
-
-                    }
-                    else {
-                        res.render("main", {
-                            bookDetail: book.dataValues,
-                            title: "Book Details"
-                        })
+router.route('/:id')
+    .get( function (req, res, next) {
+        let bookItem;
+        Books.findByPrimary(req.params.id)
+            .then(function (book) {
+                bookItem = book;
+                Loans.findAll({
+                    include: {model: Patrons},
+                    where: {
+                        book_id: book.dataValues.id
                     }
                 })
-        })
+                    .then(function (loans) {
+                        if (loans.length > 0) {
+                            console.log(loans);
+                            res.render("main", {
+                                bookDetail: book.dataValues,
+                                patronDetails: loans[0].dataValues.Patron.dataValues,
+                                loanDetails: loans,
+                                title: "Book Details"
+                            })
 
-});
+                        }
+                        else {
+                            res.render("main", {
+                                bookDetail: book.dataValues,
+                                title: "Book Details"
+                            })
+                        }
+                    })
+            })
+
+    })
+    .post([function (req, res, next) {
+        Books.findByPrimary(req.params.id)
+            .then(function (book) {
+                book.update(req.body);
+                next();
+            })
+    }, function (req, res) {
+        res.redirect('/books/all')
+    }]);
 
 module.exports = router;

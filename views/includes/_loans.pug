@@ -21,4 +21,4 @@ table
                 td #{loan.dataValues.returned_on}
                 td
                     if !loan.dataValues.returned_on
-                        a.button(href='/loans/return/' + loan.dataValues.id) Return Book
+                        a.button(href='/returns/' + loan.dataValues.id) Return Book
