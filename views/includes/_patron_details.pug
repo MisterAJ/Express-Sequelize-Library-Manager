@@ -1,23 +1,27 @@
 h1 Patron: #{patronDetail.first_name} #{patronDetail.last_name}
+
+if errors
+    include ./_errors
+
 form(action='/patrons/' + patronDetail.id method='post')
     p
         label(for='first_name') First Name -
-        input#first_name(name='first_name' type='text', required='' value=patronDetail.first_name)
+        input#first_name(name='first_name' type='text', value=patronDetail.first_name)
     p
         label(for='last_name') Last Name -
-        input#last_name(name='last_name' type='text', required='' value=patronDetail.last_name)
+        input#last_name(name='last_name' type='text', value=patronDetail.last_name)
     p
         label(for='address') Address -
-        input#address(name='address' type='text', required='' value=patronDetail.address)
+        input#address(name='address' type='text', value=patronDetail.address)
     p
         label(for='email') Email -
-        input#email(name='email' type='email', required='' value=patronDetail.email)
+        input#email(name='email' type='text', value=patronDetail.email)
     p
         label(for='library_id') Library ID -
-        input#library_id(name='library_id' type='text', required='' value=patronDetail.library_id)
+        input#library_id(name='library_id' type='text', value=patronDetail.library_id)
     p
         label(for='zip_code') Zip code -
-        input#zip_code(name='zip_code' type='text', required='' value=patronDetail.zip_code)
+        input#zip_code(name='zip_code' type='text', value=patronDetail.zip_code)
     p
         input(type='submit', value='Update')
 h2 Loan History

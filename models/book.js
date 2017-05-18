@@ -6,10 +6,38 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true
         },
-        title: DataTypes.STRING,
-        author: DataTypes.STRING,
-        genre: DataTypes.STRING,
-        first_published: DataTypes.STRING
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                len: [2,40]
+            }
+        },
+        author: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                len: [2,15]
+            }
+        },
+        genre: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                len: [2,15]
+            }
+        },
+        first_published: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                len: [4,15]
+            }
+        },
     }, {
         classMethods: {
             associate: function(models) {

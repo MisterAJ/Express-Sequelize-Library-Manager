@@ -1,14 +1,17 @@
 h1 New Book
+if errors
+    include ./_errors
+
 form(action='/books/new' method='post')
     p
         label(for='title') Title
-        input#title(name='title' type='text' required='')
+        input#title(name='title' type='text')
     p
         label(for='author') Author
-        input#author(name='author' type='text' required='')
+        input#author(name='author' type='text')
     p
         label(for='genre') Genre
-        input#genre(name='genre' type='text' required='')
+        input#genre(name='genre' type='text')
     p
         label(for='first_published') First Published
         input#first_published(name='first_published' type='number')

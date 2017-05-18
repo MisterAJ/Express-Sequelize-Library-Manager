@@ -8,9 +8,32 @@ module.exports = function (sequelize, DataTypes) {
         },
         book_id: DataTypes.INTEGER,
         patron_id: DataTypes.INTEGER,
-        loaned_on: DataTypes.DATE,
-        return_by: DataTypes.DATE,
-        returned_on: DataTypes.DATE,
+        loaned_on: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                isDate: true,
+                isAfter: "2017-05-05"
+            }
+        },
+        return_by: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                isDate: true,
+                isAfter: "2017-05-05"
+            }
+        },
+        returned_on: {
+            type: DataTypes.DATE,
+            validate: {
+                notEmpty: true,
+                isDate: true,
+                isAfter: "2017-05-05"
+            }
+        },
     }, {
         classMethods: {
             associate: function (models) {

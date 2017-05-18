@@ -1,22 +1,26 @@
 h1 New Patron
+
+if errors
+    include ./_errors
+
 form(action='/patrons/new' method='post')
     p
         label(for='first_name') First Name
-        input#first_name(name='first_name' type='text' required='')
+        input#first_name(name='first_name' type='text')
     p
         label(for='last_name') Last Name
-        input#last_name(name='last_name' type='text' required='')
+        input#last_name(name='last_name' type='text')
     p
         label(for='address') Address
-        input#address(name='address' type='text' required='')
+        input#address(name='address' type='text')
     p
         label(for='email') Email
-        input#email(name='email' type='email' required='' placeholder='Enter a valid email address')
+        input#email(name='email' type='email' placeholder='Enter a valid email address')
     p
         label(for='library_id') Library ID
-        input#library_id(name='library_id' type='text' required='')
+        input#library_id(name='library_id' type='text')
     p
         label(for='zip_code') Zip or Postal Code
-        input#zip_code(name='zip_code' type='text' required='')
+        input#zip_code(name='zip_code' type='text')
     p
         input(type='submit', value='Create New Patron')

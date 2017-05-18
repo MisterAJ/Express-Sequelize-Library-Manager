@@ -93,3 +93,7 @@ input {
 input[type=text], select {
     margin-left: 10px;
 }
+
+.error {
+    color: red;
+}

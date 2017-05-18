@@ -6,12 +6,55 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true
         },
-        first_name: DataTypes.STRING,
-        last_name: DataTypes.STRING,
-        address: DataTypes.STRING,
-        email: DataTypes.STRING,
-        library_id: DataTypes.STRING,
-        zip_code: DataTypes.INTEGER
+        first_name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                len: [2,20]
+            }
+        },
+        last_name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                len: [2,20]
+            }
+        },
+        address: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                len: [2, 30]
+            }
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                isEmail: true,
+                len: [2,50]
+            }
+        },
+        library_id: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+                len: [2,15]
+            }
+        },
+        zip_code: {
+            type: DataTypes.INTEGER,
+
+            validate: {
+                notEmpty: true,
+                len: 5
+            }
+        },
     }, {
         classMethods: {
             associate: function (models) {
